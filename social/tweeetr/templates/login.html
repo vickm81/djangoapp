@@ -1,0 +1,27 @@
+{%extends 'base.html'%}
+
+{%block content%}
+{%if user.is_authenticated%}
+<h1>You are already logged in</h1>
+{%else%}
+<br><br>
+    <div class="row g-3">
+  <div class="col-sm">
+  </div>
+  <div class="col-sm rounded-3 border border-secondary p-2 mb-2">
+    <form method="post" action="{%url 'login'%}">
+      {%csrf_token%}
+    <br>
+    <h2 align="center"><i class="fa-brands fa-tumblr fa-xl" style="color: #eceff4;"></i></h2><br>
+    <input type="text" class="form-control" placeholder="username" name="username"><br>
+    <input type="password" class="form-control" placeholder="password" name="password"><br>
+    <button type="submit" class="btn btn-secondary">&nbsp; Login &nbsp;</button><br>
+      <br>
+      <p>Don't have an account? <a href="{%url 'register'%}">Sign up</a></p>
+    </form>
+  </div>
+  <div class="col-sm">
+  </div>
+</div>
+{%endif%}
+{%endblock%}

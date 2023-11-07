@@ -1,0 +1,67 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block content%}
+<h3>Tweeets for you</h3>
+    <div class="container">
+      <div class="row">
+        <div id="tweeet" class="col-8">
+    {%for tweeet in tweeets%}
+            <div class="alert alert-dark" role="alert" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-1">
+                            {%if tweeet.user.profile.profile_image%}
+                                <img src="{{tweeet.user.profile.profile_image.url}}" class="rounded-circle" width="50" height="50">
+                            {%else%}
+                                <img src="{%static 'images/icon.jpg'%}" class="rounded-circle" width="50" height="50" alt="profile image">
+                            {%endif%}
+                        </div>
+                        <div class="col-10">
+                             <b>{{tweeet.user.first_name}}
+                            {{tweeet.user.last_name}}</b>
+                            @{{tweeet.user.username}}
+                            <small class="text-muted">
+                            {{tweeet.created_at}}
+                            </small><br>
+                            {{tweeet.body}}<br>
+                            {{tweeet.likes_counted}}
+                            {%if user in tweeet.likes.all%}
+                                <a href="{%url 'tweeet_like' tweeet.id%}">
+                                    <i class="fa-solid fa-heart" style="color:#dc093e"></i></a>
+                            {%else%}
+                                <a href="{%url 'tweeet_like' tweeet.id%}">
+                                    <i class="fa fa-heart-o" style="color:#dc093e"></i></a>
+                            {%endif%}
+                                &nbsp;&nbsp
+                                 <a href="{%url 'show_tweeet' tweeet.id%}">  <i class="fa fa-share" style="color:black"></i></a>
+                        </div>
+                            <br><br>
+                    </div>
+                </div>
+            </div>
+            <script>
+    // Get a reference to the div element by its ID
+    var divElement = document.getElementById("tweeet");
+
+    // Add a click event listener to the div
+    divElement.addEventListener("click", function() {
+        // Redirect to another page on the same website
+        window.location.href = "{%url 'show_tweeet' tweeet.id%}";
+    });
+</script>
+    {%endfor%}
+        </div>
+    <div class="col-4">
+        {%if form%}
+        <form method="POST">
+            {%csrf_token%}
+            {{form.as_p}}
+            <button type="submit" class="btn btn-secondary">post</button>
+        {%endif%}
+</form>
+    </div>
+      </div>
+    </div>
+{%endblock%}
+
+

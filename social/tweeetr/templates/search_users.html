@@ -1,0 +1,43 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block content%}
+<h3>Search for Tweeeps</h3><br><br>
+    <div class="container">
+        <form class="d-flex" role="search" method=POST>
+            {%csrf_token%}
+            <input class="form-control me-2" type="search" placeholder="" aria-label="Search" name="search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <br><br>
+        {%if search%}
+        <b>You Searched For: {{search}}</b><br>
+         {%if searched%}
+        {%for result in searched%}
+            <br>
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        {%if result.profile.profile_image%}
+                            <img src="{{result.profile.profile_image.url}}" class="img-fluid rounded-start" width="150" height="150">
+                        {%else%}
+                            <img src="{%static 'images/icon.jpg'%}" class="img-fluid rounded-start" alt="profile image" width="150" height="150">
+                        {%endif%}
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Username:{{result.profile.user.username}}</h5>
+                            <p class="card-text">Link <a href="{%url 'profile' result.profile.user.id%}">@{{result.profile.user.username|lower}}</a></p>
+                            <p class="card-text"><small class="text-body-secondary">Last updated:{{result.profile.date_modified}}</small></p>
+                </div>
+            </div>
+            </div>
+            </div>
+            {%endfor%}
+            {%else%}
+                user not found!!
+            {%endif%}
+        {%endif%}
+        </div>
+{%endblock%}
+
+

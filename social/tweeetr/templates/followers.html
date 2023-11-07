@@ -1,0 +1,38 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block content%}
+    <h1>{{request.user.username}}'s followers</h1>
+
+    <br>
+    {%if profiles%}
+        {%for profile in profiles.followed_by.all%}
+        <div class="card mb-3" style="max-width: 540px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      {%if profile.profile_image%}
+            <img src="{{profile.profile_image.url}}" class="img-fluid rounded-start" width="150" height="150">
+      {%else%}
+        <img src="{%static 'images/icon.jpg'%}" class="img-fluid rounded-start" alt="profile image" width="150" height="150">
+        {%endif%}
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{profile.user.username}}&nbsp
+             {%if profile in profile.follows.all%}
+                &nbsp<a href="{%url 'unfollow' profile.user.id%}"><i class="fas fa-user-times"></i></a><br><br>
+
+                {%else%}
+                    &nbsp<a href="{%url 'follow' profile.user.id%}"><i class="fa-solid fa-user-plus"></i></a><br><br>
+                {%endif%}
+            <br></h5>
+        <p class="card-text">Link <a href="{%url 'profile' profile.user.id%}">@{{profile.user.username|lower}}</a></p>
+        <p class="card-text"><small class="text-body-secondary">Last updated:{{profile.date_modified}}</small></p>
+      </div>
+    </div>
+  </div>
+</div>
+        <br><br>
+        {%endfor%}
+    {%endif%}
+
+{%endblock%}

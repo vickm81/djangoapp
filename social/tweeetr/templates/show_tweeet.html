@@ -1,0 +1,55 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block content%}
+    <div class="container" text-center>
+      <div class="row">
+        <div class="col-8">
+            <div>
+                <h3><a href="{%url 'home'%}"> <i class="fa-solid fa-arrow-left"></i></a> &nbsp;&nbsp;<b>post</b></h3>
+            </div><br>
+       <div class="alert alert-dark" role="alert">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-1">
+                            {%if tweeet.user.profile.profile_image%}
+                                <img src="{{tweeet.user.profile.profile_image.url}}" class="rounded-circle" width="50" height="50">
+                            {%else%}
+                                <img src="{%static 'images/icon.jpg'%}" class="rounded-circle" width="50" height="50" alt="profile image">
+                            {%endif%}
+                        </div>
+                        <div class="col-10">
+                             <b>{{tweeet.user.first_name}}
+                            {{tweeet.user.last_name}}</b>
+                            @{{tweeet.user.username}}
+                            <small class="text-muted">
+                            {{tweeet.created_at}}
+                            </small><br>
+                            {{tweeet.body}}<br>
+                            {{tweeet.likes_counted}}
+                            {%if user in tweeet.likes.all%}
+                                <a href="{%url 'tweeet_like' tweeet.id%}">
+                                    <i class="fa-solid fa-heart" style="color:#dc093e"></i></a>
+                            {%else%}
+                                <a href="{%url 'tweeet_like' tweeet.id%}">
+                                    <i class="fa fa-heart-o" style="#color:dc093e"></i></a>
+                            {%endif%}
+                                &nbsp;&nbsp;
+                            &nbsp;&nbsp
+                            <br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="col-4">
+        {%if form%}
+        <form method="POST">
+            {%csrf_token%}
+            {{form.as_p}}
+            <button type="submit" class="btn btn-secondary">Tweeet</button>
+        {%endif%}
+</form>
+    </div>
+      </div>
+    </div>
+    </div>
+{%endblock%}
