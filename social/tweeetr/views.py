@@ -3,8 +3,6 @@ from django.contrib import messages
 from .models import Profile, Tweeet
 from .forms import Tweeet_form, SignUpForm, ProfilePicForm
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
-from django import forms
 from django.contrib.auth.models import User
 # Create your views here.
 
@@ -19,6 +17,7 @@ def home(request):
                 tweeet.save()
                 messages.success(request, "your tweeet has been posted")
                 return redirect('home')
+        user_profile = Profile.objects.get(user=request.user)
         tweeets = Tweeet.objects.all().order_by('-created_at')
         return render(request, 'home.html', {'tweeets':tweeets, "form":form})
     else:
