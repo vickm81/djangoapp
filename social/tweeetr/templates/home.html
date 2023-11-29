@@ -9,14 +9,14 @@
             <div class="alert alert-dark tweeet" role="alert" data-tweet-id="{{ tweeet.id }}">
                 <div class="container">
                     <div class="row">
-                        <div class="col-1">
+                        <div class="col-2">
                             {%if tweeet.user.profile.profile_image%}
                                 <img src="{{tweeet.user.profile.profile_image.url}}" class="rounded-circle" width="50" height="50">
                             {%else%}
                                 <img src="{%static 'images/icon.jpg'%}" class="rounded-circle" width="50" height="50" alt="profile image">
                             {%endif%}
                         </div>
-                        <div class="col-10">
+                        <div class="col-10 text">
                              <b>{{tweeet.user.first_name}}
                             {{tweeet.user.last_name}}</b>
                             @{{tweeet.user.username}}
@@ -41,7 +41,6 @@
             </div>
     {%endfor%}
             <script>
-    // Move the script outside the loop and use a class for the tweeet element
     document.addEventListener("DOMContentLoaded", function() {
         var tweeetElements = document.querySelectorAll(".tweeet");
 
